@@ -4,10 +4,9 @@ from conans.errors import ConanInvalidConfiguration
 
 class BotcraftConan(ConanFile):
     name = "botcraft"
-    version = "0.1"
+    version = "0.1.0"
     license = "GPL-3.0-or-later"
-    author = "adepierre"
-    url = "https://github.com/adepierre/Botcraft"
+    url = "https://github.com:Lemiort/Botcraft.git"
     description = "Botcraft is a cross-platform C++ library to connect and interact with Minecraft servers with (optional) integrated OpenGL renderer."
     topics = ("minecraft", "bot", "opengl")
     settings = "os", "compiler", "build_type", "arch"
@@ -19,7 +18,7 @@ class BotcraftConan(ConanFile):
                        "build_examples": True, "install_assets": True, "fPIC": True}
     generators = "cmake"
 
-    exports_sources = "botcraft/*", "protocolCraft/*", "CMakeLists.txt", "3rdparty/*", "Assets/*", "Examples/*"
+    exports_sources = "cmake/*", "src/*", "include/*", "private_include/*", "CMakeLists.txt", "3rdparty/*", "Assets/*", "Examples/*"
     _cmake = None
 
     @property
@@ -46,6 +45,7 @@ class BotcraftConan(ConanFile):
             del self.options.use_imgui
 
     def requirements(self):
+        self.requires("protocolcraft/0.1.0@lemiort/testing")
         self.requires("asio/1.18.2")
         self.requires("nlohmann_json/3.9.1")
         if self.options.compression:
@@ -56,7 +56,7 @@ class BotcraftConan(ConanFile):
             self.requires("glad/0.1.34")
             self.requires("glfw/3.3.4")
             self.requires("glm/0.9.9.8")
-            self.requires("rectpack2D/cci.20210710")
+            self.requires("rectpack2d/cci.20210710")
             self.requires("stb/20200203")
             if self.options.use_imgui:
                 self.requires("imgui/1.74")

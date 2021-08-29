@@ -1,6 +1,6 @@
 # Botcraft
 
-![Linux](https://github.com/adepierre/Botcraft/workflows/Linux/badge.svg) ![Windows](https://github.com/adepierre/Botcraft/workflows/Windows/badge.svg)
+![Linux](https://github.com/Lemiort/Botcraft/workflows/Linux/badge.svg) ![Windows](https://github.com/Lemiort/Botcraft/workflows/Windows/badge.svg)
 
 Botcraft is a cross-platform C++17 library to connect and interact with Minecraft servers with (optional) integrated OpenGL renderer.
 
@@ -32,31 +32,24 @@ More complex example with 10 survival bots collaborating on a pixel art build. T
 
 All dependencies are managed by conanfile so you need conan.
 
-The code is cross-platform and is automatically built on both Windows with Visual 2019 and Linux at each push. It should also work on reasonably older versions of Visual Studio and macOS as well.
-
-### ProtocolCraft
-
-ProtocolCraft is a sublibrary of the botcraft repository. It is a full implementation of the minecraft protocol for all supported versions. It used to be based on the protocol description on the [Wiki](https://wiki.vg/Protocol). However, as it seems to no longer be up to date after 1.16.5, I transitioned it to be based on the [official source code mapping](https://www.minecraft.net/en-us/article/minecraft-snapshot-19w36a) provided by Mojang.
-
-Transitioning from one protocol description to the other was a breaking change, as all the packets and many variable names were changed. But this should be easier to maintain and update in the future, as it is now directly based on the official game source code, instead of a third-party documentation.
-
 ## Building and Installation
 
 To build the library for the latest version of the game with both encryption and compression support, but without OpenGL rendering support:
 
 ```console
-git clone https://github.com/adepierre/Botcraft.git
+git clone https://github.com/Lemiort/Botcraft.git
 cd Botcraft
 mkdir build
 cd build
+conan remote add lemiort https://lemiort.jfrog.io/artifactory/api/conan/public-conan
 conan install .. --build=missing
+conan config set general.revisions_enabled=1
 cmake -DGAME_VERSION=latest -DBOTCRAFT_BUILD_EXAMPLES=ON -DBOTCRAFT_COMPRESSION=ON -DBOTCRAFT_ENCRYPTION=ON -DBOTCRAFT_USE_OPENGL_GUI=OFF ..
 make all
 ```
 
 At this point, you should have all the examples compiled and ready to run. Please note that you don't have to clone recursively or download and install the dependencies manually, cmake will automatically take care of these steps based on your build configuration and what is already installed on your machine. On Windows with Visual, you can also use cmake-gui and then compile the .sln directly from Visual.
 
-You can check [this discussion](https://github.com/adepierre/Botcraft/discussions/45#discussioncomment-1142555) for an example of how to use botcraft with your own code.
 
 There are several cmake options you can modify:
 
